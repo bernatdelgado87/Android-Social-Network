@@ -28,18 +28,15 @@ class HomeViewModel @Inject constructor(
         getFeed()
     }
 
-    fun getFeed() {
+    private fun getFeed() {
         viewModelScope.launch {
+            _homeuiModelState.emit(HomeUiModel(isLoading = true))
             getFeedUseCase()
-                .onStart {
-                    _homeuiModelState.emit(HomeUiModel(isLoading = true))
-                }
-                .catch {
-                    it.printStackTrace()
-                    _homeuiModelState.emit(HomeUiModel(isError = true))
-
-                }.collect { response ->
+                .onSuccess { response ->
                     _homeuiModelState.emit(HomeUiModel(postModels = response.postModels))
+                }
+                .onFailure {
+                    _homeuiModelState.emit(HomeUiModel(isError = true))
                 }
         }
     }
@@ -47,19 +44,17 @@ class HomeViewModel @Inject constructor(
     fun publishLike(postId: Long, like: Boolean) {
         viewModelScope.launch {
             publishLikeUseCase(PublishLikeUseCase.PublishLikeParams(postId, like))
-                .catch {
-                    it.printStackTrace()
+                .onFailure {
                     _homeuiModelState.emit(HomeUiModel(isError = true))
-                }.collect { response ->
+                }
+                .onSuccess { response ->
                     _homeuiModelState.emit(HomeUiModel(postModels = homeUiModel.value.postModels?.map { post ->
                         if (post.id == postId) {
                             post.copy(hasLiked = like)
                         } else {
                             post
                         }
-                    }
-                    )
-                    )
+                    }))
                 }
         }
     }

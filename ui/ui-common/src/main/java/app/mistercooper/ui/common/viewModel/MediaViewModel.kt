@@ -28,23 +28,17 @@ class MediaViewModel @Inject constructor(
     fun getLocalMediaImages() {
         viewModelScope.launch {
             getMediaImagesFromDeviceUseCase()
-                .catch {
-                    it.printStackTrace()
-                    _errorState.emit(true)
-                }
+                .onFailure { _errorState.emit(true) }
         }
     }
 
     fun onPhotoSelected(photo: Uri?) {
         viewModelScope.launch {
             photo?.let {
-                        getImageFromUriUseCase(
-                                photo.toString()
-                        ).collect { file ->
-                            selectedFile.emit(file)
-                        }
-            } ?: _errorState.emit(true)
+                getImageFromUriUseCase(photo.toString())
+                    .onSuccess { it.let { selectedFile.emit(it) } }
+                    .onFailure { _errorState.emit(true) }
+            }
         }
     }
-
 }

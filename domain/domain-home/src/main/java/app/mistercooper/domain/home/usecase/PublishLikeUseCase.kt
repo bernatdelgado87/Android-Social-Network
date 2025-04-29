@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class PublishLikeUseCase @Inject constructor(private val socialRepository: HomeRepository): UseCase<Unit, PublishLikeUseCase.PublishLikeParams>() {
-    override fun run(params: PublishLikeParams): Flow<Unit> {
-        return flow { emit(socialRepository.publishLike(params.postId, params.like)) }
+    override suspend fun run(params: PublishLikeParams) {
+        return socialRepository.publishLike(params.postId, params.like)
     }
 
     data class PublishLikeParams(val postId: Long, val like: Boolean)

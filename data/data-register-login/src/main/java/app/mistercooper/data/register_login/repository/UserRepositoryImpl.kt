@@ -4,6 +4,7 @@ import app.mistercooper.data.common.local.LocalUserDataSource
 import app.mistercooper.data.register_login.remote.api.RegisterLoginApi
 import app.mistercooper.data.register_login.remote.mapper.toDTO
 import app.mistercooper.domain.common.arch.model.GlobalFailure
+import app.mistercooper.domain.register_login.model.RegisterUserModel
 import app.mistercooper.domain.register_login.repository.UserRepository
 import javax.inject.Inject
 
@@ -11,7 +12,7 @@ class UserRepositoryImpl @Inject constructor(
     private val apiRemote: RegisterLoginApi,
     private val localUserDataSource: LocalUserDataSource
 ) : UserRepository {
-    override suspend fun registerUser(registerUserModel: app.mistercooper.domain.register_login.model.RegisterUserModel) {
+    override suspend fun registerUser(registerUserModel: RegisterUserModel) {
         try {
             val response = apiRemote.registerUser(
                 name = registerUserModel.name,

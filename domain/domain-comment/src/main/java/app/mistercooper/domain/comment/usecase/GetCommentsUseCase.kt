@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class GetCommentsUseCase @Inject constructor(val socialRepository: CommentRepository): UseCase<CommentWrapperModel, GetCommentsUseCase.GetCommentsParams>() {
-    override fun run(params: GetCommentsParams): Flow<CommentWrapperModel> {
-        return flow { emit(socialRepository.getComments(params.postId)) }
+    override suspend fun run(params: GetCommentsParams): CommentWrapperModel {
+        return socialRepository.getComments(params.postId)
     }
 
     data class GetCommentsParams(val postId: Long)

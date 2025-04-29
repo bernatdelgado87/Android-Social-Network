@@ -6,9 +6,9 @@ import kotlinx.coroutines.flow.flowOn
 
 abstract class UseCase<out T, in Params : Any>() {
 
-    abstract fun run(params: Params): Flow<T>
+    abstract suspend fun run(params: Params): T
 
-    operator fun invoke(params: Params = None as Params) = run(params).flowOn(Dispatchers.IO)
+    suspend operator fun invoke(params: Params = None as Params) = runCatching { run(params) }.onFailure { it.printStackTrace() }
 
 }
 

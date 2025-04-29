@@ -7,10 +7,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class LoginUseCase @Inject constructor(val userRepository: UserRepository) :
-    UseCase<Unit, LoginUserModel>() {
-    override fun run(params: LoginUserModel): Flow<Unit> {
-        return flow { emit(userRepository.login(params)) }
+class LoginUseCase @Inject constructor(val userRepository: UserRepository) : UseCase<Unit, LoginUserModel>() {
+    override suspend fun run(params: LoginUserModel) {
+        return userRepository.login(params)
     }
-
 }

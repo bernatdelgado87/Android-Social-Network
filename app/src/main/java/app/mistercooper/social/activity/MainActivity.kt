@@ -13,7 +13,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import app.mistercooper.ui.common.navigation.GlobalNavigator
 import app.mistercooper.social.navigation.getNavGraphBuilder
-import app.mistercooper.social.theme.SocialCooperAndroidTheme
+import app.mistercooper.ui.common.theme.SocialCooperAndroidTheme
 import app.mistercooper.ui.common.components.LoadingComponent
 import app.mistercooper.ui.common.navigation.CustomNavigator
 import app.mistercooper.ui.common.navigation.NavigationRoute

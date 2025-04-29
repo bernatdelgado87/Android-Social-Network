@@ -1,4 +1,4 @@
-package app.mistercooper.social.theme
+package app.mistercooper.ui.common.theme
 
 import androidx.compose.ui.graphics.Color
 

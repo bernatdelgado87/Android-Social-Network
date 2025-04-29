@@ -2,16 +2,15 @@ package app.mistercooper.ui.registerlogin.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.mistercooper.ui.common.utils.BuildConfigFieldsProvider
 import app.mistercooper.domain.register_login.model.LoginUserModel
 import app.mistercooper.domain.register_login.model.RegisterUserModel
 import app.mistercooper.domain.register_login.usecase.LoginUseCase
 import app.mistercooper.domain.register_login.usecase.RegisterUserUseCase
+import app.mistercooper.ui.common.utils.BuildConfigFieldsProvider
 import app.mistercooper.ui.registerlogin.model.RegisterLoginUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import java.io.File
 import javax.inject.Inject
@@ -21,7 +20,7 @@ class RegisterLoginViewModel @Inject constructor(
     private val registerUserUseCase: RegisterUserUseCase,
     private val loginUseCase: LoginUseCase,
     internal val buildConfigFieldsProvider: BuildConfigFieldsProvider
-    ) : ViewModel() {
+) : ViewModel() {
 
     private val _registerLoginUiModelState = MutableStateFlow(
         RegisterLoginUiModel()
@@ -30,41 +29,25 @@ class RegisterLoginViewModel @Inject constructor(
 
     fun registerUser(email: String, userName: String, password: String, file: File) {
         viewModelScope.launch {
-            registerUserUseCase(
-                RegisterUserModel(
-                    name = userName,
-                    email = email,
-                    password = password,
-                    imageProfile = file
-                )
-            )
-                .catch {
-                    it.printStackTrace()
-                    _registerLoginUiModelState.emit(RegisterLoginUiModel(error = true))
-
-                }.collect { response ->
+            registerUserUseCase(RegisterUserModel(name = userName, email = email, password = password, imageProfile = file))
+                .onSuccess { response ->
                     _registerLoginUiModelState.emit(RegisterLoginUiModel(registerLoginSuccess = true))
+                }
+                .onFailure {
+                    _registerLoginUiModelState.emit(RegisterLoginUiModel(error = true))
                 }
         }
     }
 
     fun login(email: String, password: String) {
         viewModelScope.launch {
-            loginUseCase(
-                LoginUserModel(
-                    email = email,
-                    password = password
-                )
-            )
-                .catch {
-                    it.printStackTrace()
-                    _registerLoginUiModelState.emit(RegisterLoginUiModel(error = true))
-
-                }.collect { response ->
+            loginUseCase(LoginUserModel(email = email, password = password))
+                .onSuccess { response ->
                     _registerLoginUiModelState.emit(RegisterLoginUiModel(registerLoginSuccess = true))
+                }
+                .onFailure {
+                    _registerLoginUiModelState.emit(RegisterLoginUiModel(error = true))
                 }
         }
     }
-
-
 }

@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class GetFeedUseCase @Inject constructor(private val socialRepository: HomeRepository): UseCase<FeedModel, None>() {
-    override fun run(params: None): Flow<FeedModel> {
-        return flow { emit(socialRepository.getFeed()) }
+    override suspend fun run(params: None): FeedModel {
+        return socialRepository.getFeed()
     }
 }

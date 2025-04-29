@@ -9,8 +9,8 @@ import javax.inject.Inject
 
 class PublishPostUseCase @Inject constructor(val socialRepository: PublishRepository) :
     UseCase<Unit, PublishPostUseCase.PublishPostParams>() {
-    override fun run(params: PublishPostParams): Flow<Unit> {
-        return flow { emit(socialRepository.publishPost(params.text, params.file)) }
+    override suspend fun run(params: PublishPostParams) {
+        return socialRepository.publishPost(params.text, params.file)
     }
 
     data class PublishPostParams(val text: String, val file: File)

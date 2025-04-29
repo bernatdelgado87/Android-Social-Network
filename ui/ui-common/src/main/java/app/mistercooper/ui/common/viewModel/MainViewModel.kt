@@ -26,11 +26,7 @@ class MainViewModel @Inject constructor(
     fun isRegistered() {
         viewModelScope.launch {
             isUserRegisteredUseCase()
-                .catch {
-                    it.printStackTrace()
-                }.collect { response ->
-                    _isRegisteredState.emit(response)
-                }
+                .onSuccess { _isRegisteredState.emit(it) }
         }
     }
 

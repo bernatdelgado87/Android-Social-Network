@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class PublishCommentUseCase @Inject constructor(val socialRepository: CommentRepository): UseCase<CommentWrapperModel, PublishCommentUseCase.PublishCommentParams>() {
-    override fun run(params: PublishCommentParams): Flow<CommentWrapperModel> {
-        return flow { emit(socialRepository.publishComment(params.comment, params.postId, params.commentReferentId)) }
+    override suspend fun run(params: PublishCommentParams): CommentWrapperModel {
+        return socialRepository.publishComment(params.comment, params.postId, params.commentReferentId)
     }
 
     data class PublishCommentParams(val comment: String, val postId: Long, val commentReferentId: Int? = null)

@@ -9,8 +9,8 @@ import javax.inject.Inject
 
 class IsUserRegisteredUseCase @Inject constructor(val userRepository: MainRepository) :
     UseCase<Boolean, None>() {
-    override fun run(params: None): Flow<Boolean> {
-        return flow { emit(userRepository.isUserRegistered()) }
+    override suspend fun run(params: None): Boolean {
+        return userRepository.isUserRegistered()
     }
 
 }

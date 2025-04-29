@@ -8,8 +8,6 @@ import app.mistercooper.ui.comment.model.PublishCommentUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,36 +21,27 @@ class CommentViewModel @Inject constructor(
 
     fun publishComment(comment: String, postId: Long, commentReferentId: Int? = null) {
         viewModelScope.launch {
-            publishCommentUseCase(
-                PublishCommentUseCase.PublishCommentParams(comment, postId, commentReferentId)
-            )
-                .onStart {
-                    _commentUiModelState.emit(commentUiModel.value.copy(isError = false, isLoadingPublish = true))
-                }
-                .catch {
-                    it.printStackTrace()
-                    _commentUiModelState.emit(commentUiModel.value.copy(isError = true, isLoadingPublish = false))
-
-                }.collect { response ->
+            _commentUiModelState.emit(commentUiModel.value.copy(isError = false, isLoadingPublish = true))
+            publishCommentUseCase(PublishCommentUseCase.PublishCommentParams(comment, postId, commentReferentId))
+                .onSuccess { response ->
                     _commentUiModelState.emit(PublishCommentUiModel(commentWrapper = response))
+                }
+                .onFailure {
+                    _commentUiModelState.emit(commentUiModel.value.copy(isError = true, isLoadingPublish = false))
                 }
         }
     }
 
     fun getComments(postId: Long) {
         viewModelScope.launch {
-            getCommentsUseCase(
-                GetCommentsUseCase.GetCommentsParams(postId)
-            )
-                .onStart {
-                    _commentUiModelState.emit(commentUiModel.value.copy(isError = false, isLoadingComments = true))
+            _commentUiModelState.emit(commentUiModel.value.copy(isError = false, isLoadingComments = true))
+            getCommentsUseCase(GetCommentsUseCase.GetCommentsParams(postId))
+                .onSuccess { response ->
+                    _commentUiModelState.emit(PublishCommentUiModel(commentWrapper = response))
                 }
-                .catch {
+                .onFailure {
                     it.printStackTrace()
                     _commentUiModelState.emit(commentUiModel.value.copy(isError = true, isLoadingComments = false))
-
-                }.collect { response ->
-                    _commentUiModelState.emit(PublishCommentUiModel(commentWrapper = response))
                 }
         }
     }

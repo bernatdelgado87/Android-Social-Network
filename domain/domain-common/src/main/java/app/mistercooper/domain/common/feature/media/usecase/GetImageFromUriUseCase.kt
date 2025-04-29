@@ -9,9 +9,7 @@ import javax.inject.Inject
 
 class GetImageFromUriUseCase @Inject constructor(private val mediaRepository: MediaRepository) :
     UseCase<File, String>() {
-    override fun run(params: String): Flow<File> {
-        return flow {
-            emit(mediaRepository.getSavedImageByUri(params))
-        }
+    override suspend fun run(params: String): File {
+        return mediaRepository.getSavedImageByUri(params)
     }
 }

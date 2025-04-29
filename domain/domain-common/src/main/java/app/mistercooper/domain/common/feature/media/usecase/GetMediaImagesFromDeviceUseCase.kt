@@ -8,9 +8,7 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class GetMediaImagesFromDeviceUseCase @Inject constructor(private val mediaRepository: MediaRepository): UseCase<Unit, None>() {
-    override fun run(params: None): Flow<Unit> {
-        return flow {
-            emit(mediaRepository.getSavedImages())
-        }
+    override suspend fun run(params: None) {
+        return mediaRepository.getSavedImages()
     }
 }
