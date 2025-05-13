@@ -1,15 +1,21 @@
 package app.mistercooper.ui.common.navigation
 
-interface Route
+import kotlinx.serialization.Serializable
 
-enum class NavigationRoute: Route {
-    HOME_FEED,
-    PUBLISH_NOW,
-    LOGIN_OR_REGISTER,
-    LOGIN,
-    REGISTER,
+@Serializable
+sealed interface NavigationRoute {
+    @Serializable
+    data object HomeFeed : NavigationRoute
+    @Serializable
+    data object PublishNow : NavigationRoute
+    @Serializable
+    data object LoginOrRegister : NavigationRoute
+    @Serializable
+    data object Login : NavigationRoute
+    @Serializable
+    data object Register : NavigationRoute
 }
 
-enum class BottomSheetRoute: Route {
-    COMMENTS
+sealed interface ModalDestination {
+    data class Comments(val postId: Long, val writeNow: Boolean, val onDismiss: () -> Unit) : ModalDestination
 }

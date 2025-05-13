@@ -5,11 +5,11 @@ import androidx.navigation.NavController
 
 interface CustomNavigator {
     @Composable
-    fun showBottomSheet(bottomSheetRoute: BottomSheetRoute, args: Map<String, ArgumentNavigatorWrapper>)
+    fun showBottomSheet(bottomSheetRoute: ModalDestination)
 }
 
-fun NavController.navigate(route: NavigationRoute) {
-    navigate(route.name)
+fun NavController.navigate(navigationRoute: NavigationRoute) {
+    navigate(navigationRoute)
 }
 
 sealed class ArgumentNavigatorWrapper {

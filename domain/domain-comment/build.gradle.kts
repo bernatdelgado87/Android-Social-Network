@@ -13,5 +13,5 @@ dependencies {
     api(project(":domain:domain-common"))
     //Hilt Domain
     implementation(libs.dagger.hilt.core)
-    ksp(libs.dagger.hilt.core.compiler)
+    ksp(libs.dagger.hilt.compiler)
 }

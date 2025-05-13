@@ -35,14 +35,9 @@ import app.mistercooper.domain.common.feature.user.model.UserModel
 import app.mistercooper.domain.home.model.PostModel
 import app.mistercooper.ui.common.components.CommonScaffoldBottomBar
 import app.mistercooper.ui.common.components.LoadingComponent
-import app.mistercooper.ui.common.navigation.ArgumentNavigatorWrapper
-import app.mistercooper.ui.common.navigation.BottomSheetRoute
-import app.mistercooper.ui.common.navigation.CommentNavigationArgs.Companion.ON_DISMISS_KEY
-import app.mistercooper.ui.common.navigation.CommentNavigationArgs.Companion.POST_ID_KEY
-import app.mistercooper.ui.common.navigation.CommentNavigationArgs.Companion.WRITE_NOW_KEY
 import app.mistercooper.ui.common.navigation.GlobalNavigator
+import app.mistercooper.ui.common.navigation.ModalDestination
 import app.mistercooper.ui.common.navigation.NavigationRoute
-import app.mistercooper.ui.common.navigation.navigate
 import app.mistercooper.ui.home.viewmodel.HomeViewModel
 import coil.compose.AsyncImage
 
@@ -65,7 +60,7 @@ fun HomeScreen(globalNavigator: GlobalNavigator) {
         },
         showError = state.value.isError,
         actionFloatingButton = {
-            globalNavigator.nativeController.navigate(NavigationRoute.PUBLISH_NOW)
+            globalNavigator.nativeController.navigate(NavigationRoute.PublishNow)
         },
         iconVectorFloatingButton = Icons.Rounded.Add
     )
@@ -118,12 +113,7 @@ fun HomeFeedView(
                         var showComments: Boolean by remember { mutableStateOf(false) }
                         if (showComments) {
                             globalNavigator.customNavigator.showBottomSheet(
-                                BottomSheetRoute.COMMENTS,
-                                mapOf(POST_ID_KEY to ArgumentNavigatorWrapper.LongArg(post.id),
-                                    WRITE_NOW_KEY to ArgumentNavigatorWrapper.BooleanArg(false),
-                                    ON_DISMISS_KEY to ArgumentNavigatorWrapper.FunctionArg {
-                                        showComments = false
-                                    })
+                                ModalDestination.Comments(post.id, false, { showComments = false })
                             )
                         }
                         Text(
@@ -181,12 +171,7 @@ fun InteractionIconsComponent(globalNavigator: GlobalNavigator, post: PostModel)
         )
         if (showComments) {
             globalNavigator.customNavigator.showBottomSheet(
-                BottomSheetRoute.COMMENTS,
-                mapOf(POST_ID_KEY to ArgumentNavigatorWrapper.LongArg(post.id),
-                    WRITE_NOW_KEY to ArgumentNavigatorWrapper.BooleanArg(true),
-                    ON_DISMISS_KEY to ArgumentNavigatorWrapper.FunctionArg {
-                        showComments = false
-                    })
+                ModalDestination.Comments(post.id, false, { showComments = false })
             )
         }
     }

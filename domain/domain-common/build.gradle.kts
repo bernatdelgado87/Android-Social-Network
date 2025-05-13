@@ -1,5 +1,4 @@
 plugins {
-    alias(libs.plugins.composeCompiler)
     alias(libs.plugins.jetbrainsKotlinJvm)
     alias(libs.plugins.kspAndroid)
     alias(libs.plugins.kotlinSerialization)
@@ -15,7 +14,7 @@ dependencies {
     api(libs.kotlinx.coroutines)
     //Hilt Domain
     implementation(libs.dagger.hilt.core)
-    ksp(libs.dagger.hilt.core.compiler)
+    ksp(libs.dagger.hilt.compiler)
 
     //todo android for URI
     //implementation(libs.android.library)

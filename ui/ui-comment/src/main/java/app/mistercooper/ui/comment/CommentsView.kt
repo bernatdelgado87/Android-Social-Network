@@ -13,11 +13,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -70,55 +73,60 @@ fun CommentsBottomSheetScreen(
     val viewModelState = viewModel.commentUiModel.collectAsState()
 
     val modalBottomSheetState = rememberModalBottomSheetState()
+    LaunchedEffect(key1 = Unit) {
+        modalBottomSheetState.expand()
+    }
     var modalHeight by remember { mutableStateOf(0) }
 
     viewModel.getComments(postId)
-
-    ModalBottomSheet(
-        modifier = Modifier
-            .padding(0.dp)
-            .onGloballyPositioned {
-                modalHeight = it.size.height
-            }
-            .imePadding()
-            .fillMaxSize(),
-        onDismissRequest = { onDismiss() },
-        sheetState = modalBottomSheetState,
-        dragHandle = { BottomSheetDefaults.DragHandle() },
-    ) {
-        Box(modifier = Modifier.fillMaxSize()) {
-            viewModelState.value.commentWrapper?.let {
-                if (viewModelState.value.commentWrapper!!.comments.isNotEmpty()) {
-                    CommentsListComponent(comments = viewModelState.value.commentWrapper?.comments) {
-                        viewModel.getComments(
-                            postId
-                        )
-                    }
-                } else {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxHeight(0.8f)
-                            .align(Alignment.Center)
-
-                    ) {
-                        Text(
-                            modifier = Modifier.align(Alignment.CenterHorizontally),
-                            text = stringResource(R.string.comments_empty_title),
-                            style = MaterialTheme.typography.headlineLarge,
-                        )
-
-                        Text(
+    if (modalBottomSheetState.isVisible) {
+        val bottomPadding = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
+        ModalBottomSheet(
+            modifier = Modifier.padding(bottom = bottomPadding)
+                .padding(0.dp)
+                .onGloballyPositioned {
+                    modalHeight = it.size.height
+                }
+                .imePadding()
+                .fillMaxSize(),
+            onDismissRequest = { onDismiss() },
+            sheetState = modalBottomSheetState,
+            dragHandle = { BottomSheetDefaults.DragHandle() },
+        ) {
+            Box(modifier = Modifier.fillMaxSize()) {
+                viewModelState.value.commentWrapper?.let {
+                    if (viewModelState.value.commentWrapper!!.comments.isNotEmpty()) {
+                        CommentsListComponent(comments = viewModelState.value.commentWrapper?.comments) {
+                            viewModel.getComments(
+                                postId
+                            )
+                        }
+                    } else {
+                        Column(
                             modifier = Modifier
-                                .align(Alignment.CenterHorizontally)
-                                .padding(vertical = 20.dp),
-                            text = stringResource(R.string.comments_empty_body),
-                            textAlign = TextAlign.Center,
-                            style = MaterialTheme.typography.headlineMedium,
-                        )
+                                .fillMaxHeight(0.8f)
+                                .align(Alignment.Center)
+
+                        ) {
+                            Text(
+                                modifier = Modifier.align(Alignment.CenterHorizontally),
+                                text = stringResource(R.string.comments_empty_title),
+                                style = MaterialTheme.typography.headlineLarge,
+                            )
+
+                            Text(
+                                modifier = Modifier
+                                    .align(Alignment.CenterHorizontally)
+                                    .padding(vertical = 20.dp),
+                                text = stringResource(R.string.comments_empty_body),
+                                textAlign = TextAlign.Center,
+                                style = MaterialTheme.typography.headlineMedium,
+                            )
+                        }
                     }
                 }
+                CommentsFooterComponent(postId, modalHeight, modalBottomSheetState, writeNow, viewModelState.value)
             }
-            CommentsFooterComponent(postId, modalHeight, modalBottomSheetState, writeNow, viewModelState.value)
         }
     }
 }

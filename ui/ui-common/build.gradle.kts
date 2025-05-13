@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.daggerHiltAndroid)
     alias(libs.plugins.kspAndroid)
+    alias(libs.plugins.kotlinSerialization)
 }
 
 android {
@@ -57,10 +58,13 @@ android {
         ksp (libs.dagger.hilt.android.compiler)
         ksp (libs.dagger.hilt.compiler)
 
+        implementation(libs.kotlin.serialization)
+
         //todo check this
         api(libs.androidx.activity.compose)
         //
         api(platform(libs.androidx.compose.bom))
+        api(libs.androidx.compose.navigation)
         api(libs.androidx.ui)
         api(libs.androidx.ui.graphics)
         api(libs.androidx.ui.tooling.preview)

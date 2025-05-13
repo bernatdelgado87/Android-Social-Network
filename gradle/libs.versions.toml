@@ -8,6 +8,7 @@ espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.9.0"
 activityCompose = "1.10.1"
 composeBom = "2025.05.00"
+navigationCompose = "2.9.0"
 ksp = "2.1.20-2.0.1"
 hilt = "2.56.2"
 android-hilt = "1.2.0"
@@ -26,6 +27,7 @@ androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = 
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-compose-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 androidx-animation-graphics-android = { group = "androidx.compose.animation", name = "animation-graphics-android" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
@@ -42,7 +44,6 @@ dagger-hilt-android-compiler = { group = "androidx.hilt", name = "hilt-compiler"
 dagger-hilt-android-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "android-hilt" }
 dagger-hilt-android-navigation = { group = "androidx.hilt", name = "hilt-navigation", version.ref = "android-hilt" }
 dagger-hilt-core = { group = "com.google.dagger", name = "hilt-core", version.ref = "hilt" }
-dagger-hilt-core-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
 kotlin-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinSerialization" }
 lottie = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottie" }
 okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "logging" }

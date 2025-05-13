@@ -8,6 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
@@ -27,6 +28,8 @@ class MainActivity : ComponentActivity() {
     lateinit var customNavigator: CustomNavigator
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
         setContent {
             SocialCooperAndroidTheme {
                 // A surface container using the 'background' color from the theme
@@ -43,9 +46,9 @@ class MainActivity : ComponentActivity() {
                         NavHost(
                             navController = nativeNavController,
                             startDestination = if (isRegistered) {
-                                NavigationRoute.HOME_FEED.name
+                                NavigationRoute.HomeFeed
                             } else {
-                                NavigationRoute.LOGIN_OR_REGISTER.name
+                                NavigationRoute.LoginOrRegister
                             }
                         ) {
                             getNavGraphBuilder(

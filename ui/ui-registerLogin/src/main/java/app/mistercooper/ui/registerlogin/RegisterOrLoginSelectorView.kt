@@ -16,10 +16,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import app.mistercooper.ui.common.navigation.GlobalNavigator
 import app.mistercooper.ui.common.navigation.NavigationRoute
-import app.mistercooper.ui.common.navigation.navigate
 import coil.compose.AsyncImage
 
 @Composable
@@ -47,14 +45,14 @@ fun LoginOrRegisterScreen(globalNavigator: GlobalNavigator) {
                 modifier = Modifier
                     .padding(20.dp)
                     .fillMaxWidth(),
-                onClick = { globalNavigator.nativeController.navigate(NavigationRoute.REGISTER) }) {
+                onClick = { globalNavigator.nativeController.navigate(NavigationRoute.Register) }) {
                 Text(text = "Registrarse")
             }
             OutlinedButton(
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
                     .fillMaxWidth(),
-                onClick = { globalNavigator.nativeController.navigate(NavigationRoute.LOGIN) }) {
+                onClick = { globalNavigator.nativeController.navigate(NavigationRoute.Login) }) {
                 Text(text = "Login")
             }
         }
