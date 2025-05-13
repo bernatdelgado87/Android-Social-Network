@@ -1,7 +1,7 @@
 plugins {
-    id("java-library")
+    alias(libs.plugins.composeCompiler)
     alias(libs.plugins.jetbrainsKotlinJvm)
-    id("com.google.devtools.ksp")
+    alias(libs.plugins.kspAndroid)
 }
 
 java {

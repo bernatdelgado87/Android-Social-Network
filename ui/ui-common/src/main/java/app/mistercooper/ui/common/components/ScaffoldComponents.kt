@@ -62,7 +62,7 @@ fun CommonScaffoldTopBar(globalNavigator: GlobalNavigator, topBarTitle: String, 
             )
         },
         content = { padding ->
-            content(modifier = Modifier.padding(padding))
+            content(Modifier.padding(padding))
         }
     )
     if (showError) {
@@ -102,7 +102,7 @@ fun CommonScaffoldBottomBar(globalNavigator: GlobalNavigator, content: @Composab
         },
         floatingActionButtonPosition = FabPosition.End,
         content = { padding ->
-            content(modifier = Modifier.padding(padding))
+            content(Modifier.padding(padding))
         }
     )
     if (showError) {

@@ -1,19 +1,20 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-    id ("dagger.hilt.android.plugin")
-    id("com.google.devtools.ksp")
-    kotlin("plugin.serialization")
+    alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.daggerHiltAndroid)
+    alias(libs.plugins.kspAndroid)
+    alias(libs.plugins.kotlinSerialization)
 }
 
 android {
     namespace = "app.mistercooper.social"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "app.mistercooper.social"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -37,7 +38,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.12"
+        kotlinCompilerExtensionVersion = "1.5.15"
     }
     kotlinOptions {
         jvmTarget = "1.8"

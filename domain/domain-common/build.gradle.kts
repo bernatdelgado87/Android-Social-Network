@@ -1,8 +1,8 @@
 plugins {
-    id("java-library")
+    alias(libs.plugins.composeCompiler)
     alias(libs.plugins.jetbrainsKotlinJvm)
-    id("com.google.devtools.ksp")
-    kotlin("plugin.serialization")
+    alias(libs.plugins.kspAndroid)
+    alias(libs.plugins.kotlinSerialization)
 }
 
 java {

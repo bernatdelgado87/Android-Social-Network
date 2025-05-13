@@ -1,13 +1,13 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-    id ("dagger.hilt.android.plugin")
-    id("com.google.devtools.ksp")
+    alias(libs.plugins.daggerHiltAndroid)
+    alias(libs.plugins.kspAndroid)
 }
 
 android {
     namespace = "app.mistercooper.data.register_login"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 24
