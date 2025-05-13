@@ -67,7 +67,7 @@ fun HomeScreen(globalNavigator: GlobalNavigator) {
 }
 
 @Composable
-fun HomeFeedView(
+private fun HomeFeedView(
     postModels: List<PostModel>?,
     globalNavigator: GlobalNavigator,
     modifier: Modifier = Modifier
@@ -75,69 +75,79 @@ fun HomeFeedView(
     postModels?.let { posts ->
         LazyColumn(modifier) {
             items(posts) { post ->
-                Column(modifier = Modifier.fillMaxSize()) {
-                    Box(modifier = Modifier.fillMaxSize()) {
-                        AsyncImage(
-                            model = post.imageUrl,
-                            contentDescription = "",
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                        )
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(8.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            UserComponent(post.user)
-                        }
-                    }
-                    if (post.totalLikes > 0) {
-                        Text(
-                            text = stringResource(
-                                id = R.string.post_like_people,
-                                post.totalLikes
-                            ),
-                            modifier = Modifier.padding(4.dp)
-                        )
-                    }
-                    InteractionIconsComponent(globalNavigator, post)
-                    if (post.description?.isNotEmpty() == true) {
-                        Text(
-                            text = post.description!!,
-                            modifier = Modifier.padding(horizontal = 4.dp)
-                        )
-                    }
-                    if (post.totalComments > 0) {
-                        var showComments: Boolean by remember { mutableStateOf(false) }
-                        if (showComments) {
-                            globalNavigator.customNavigator.showBottomSheet(
-                                ModalDestination.Comments(post.id, false, { showComments = false })
-                            )
-                        }
-                        Text(
-                            text = stringResource(
-                                id = R.string.post_comments_total,
-                                post.totalComments
-                            ),
-                            modifier = Modifier
-                                .padding(4.dp)
-                                .clickable {
-                                    showComments = true
-                                },
-                            style = MaterialTheme.typography.labelLarge
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(20.dp))
-                }
+                MultimediaPostItem(post, globalNavigator)
             }
         }
     }
 }
 
 @Composable
-fun UserComponent(userModel: UserModel) {
+private fun MultimediaPostItem(post: PostModel, globalNavigator: GlobalNavigator) {
+    Column(modifier = Modifier.fillMaxSize()) {
+        Box(modifier = Modifier.fillMaxSize()) {
+            AsyncImage(
+                model = post.imageUrl,
+                contentDescription = "",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxWidth()
+            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                UserComponent(post.user)
+            }
+        }
+        if (post.totalLikes > 0) {
+            Text(
+                text = stringResource(
+                    id = R.string.post_like_people,
+                    post.totalLikes
+                ),
+                modifier = Modifier.padding(4.dp)
+            )
+        }
+        InteractionIconsComponent(globalNavigator, post)
+        if (post.description?.isNotEmpty() == true) {
+            Text(
+                text = post.description!!,
+                modifier = Modifier.padding(horizontal = 4.dp)
+            )
+        }
+        if (post.totalComments > 0) {
+            CommentsCounter(globalNavigator, post)
+        }
+        Spacer(modifier = Modifier.height(20.dp))
+    }
+}
+
+@Composable
+private fun CommentsCounter(globalNavigator: GlobalNavigator, post: PostModel) {
+    var showComments: Boolean by remember { mutableStateOf(false) }
+    if (showComments) {
+        globalNavigator.customNavigator.showBottomSheet(
+            ModalDestination.Comments(post.id, false, { showComments = false })
+        )
+    }
+    Text(
+        text = stringResource(
+            id = R.string.post_comments_total,
+            post.totalComments
+        ),
+        modifier = Modifier
+            .padding(4.dp)
+            .clickable {
+                showComments = true
+            },
+        style = MaterialTheme.typography.labelLarge
+    )
+}
+
+@Composable
+private fun UserComponent(userModel: UserModel) {
     app.mistercooper.ui.common.components.UserMiniatureComponent(userModel.imageProfileUrl.orEmpty())
     Text(
         text = userModel.userName.orEmpty(),
@@ -147,7 +157,7 @@ fun UserComponent(userModel: UserModel) {
 }
 
 @Composable
-fun InteractionIconsComponent(globalNavigator: GlobalNavigator, post: PostModel) {
+private fun InteractionIconsComponent(globalNavigator: GlobalNavigator, post: PostModel) {
     Row {
         val viewModel = hiltViewModel<HomeViewModel>()
         var showComments: Boolean by remember { mutableStateOf(false) }
