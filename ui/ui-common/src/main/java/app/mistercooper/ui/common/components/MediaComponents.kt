@@ -1,7 +1,6 @@
 package app.mistercooper.ui.common.components
 
 import android.Manifest
-import android.content.Context
 import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -35,8 +34,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
 import androidx.hilt.navigation.compose.hiltViewModel
-import app.mistercooper.ui.common.utils.BuildConfigFieldsProvider
 import app.mistercooper.ui.common.R
+import app.mistercooper.ui.common.utils.BuildConfigFieldsProvider
 import app.mistercooper.ui.common.utils.checkCustomPermission
 import app.mistercooper.ui.common.utils.createImageFile
 import app.mistercooper.ui.common.utils.requestCameraPermission

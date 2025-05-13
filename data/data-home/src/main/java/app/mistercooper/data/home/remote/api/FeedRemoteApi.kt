@@ -1,8 +1,8 @@
 package app.mistercooper.data.home.remote.api
 
-import app.mistercooper.data.home.remote.dto.response.MultimediaFeedDTO
 import app.mistercooper.data.home.remote.dto.request.PublishLikeBodyDTO
 import app.mistercooper.data.home.remote.dto.response.LikeResponseDTO
+import app.mistercooper.data.home.remote.dto.response.MultimediaFeedDTO
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET

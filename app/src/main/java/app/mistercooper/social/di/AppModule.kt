@@ -1,9 +1,9 @@
 package app.mistercooper.social.di
 
-import app.mistercooper.ui.common.utils.BuildConfigFieldsProvider
 import app.mistercooper.social.application.utils.ApplicationBuildConfigFieldsProvider
 import app.mistercooper.social.navigation.CustomNavigatorImpl
 import app.mistercooper.ui.common.navigation.CustomNavigator
+import app.mistercooper.ui.common.utils.BuildConfigFieldsProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

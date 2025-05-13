@@ -12,12 +12,12 @@ import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import app.mistercooper.ui.common.navigation.GlobalNavigator
 import app.mistercooper.social.navigation.getNavGraphBuilder
-import app.mistercooper.ui.common.theme.SocialCooperAndroidTheme
 import app.mistercooper.ui.common.components.LoadingComponent
 import app.mistercooper.ui.common.navigation.CustomNavigator
+import app.mistercooper.ui.common.navigation.GlobalNavigator
 import app.mistercooper.ui.common.navigation.NavigationRoute
+import app.mistercooper.ui.common.theme.SocialCooperAndroidTheme
 import app.mistercooper.ui.common.viewModel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

@@ -1,7 +1,5 @@
 package app.mistercooper.data.register_login.di
 
-import android.content.SharedPreferences
-import app.mistercooper.data.common.di.annotations.AuthOkHttpClient
 import app.mistercooper.data.common.di.annotations.NotAuthOkHttpClient
 import app.mistercooper.data.common.local.LocalUserDataSource
 import app.mistercooper.data.register_login.remote.api.RegisterLoginApi

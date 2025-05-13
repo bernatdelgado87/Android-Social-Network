@@ -1,8 +1,8 @@
 package app.mistercooper.social.application.utils
 
+import app.mistercooper.social.BuildConfig
 import app.mistercooper.ui.common.utils.BuildConfigFields
 import app.mistercooper.ui.common.utils.BuildConfigFieldsProvider
-import app.mistercooper.social.BuildConfig
 
 class ApplicationBuildConfigFieldsProvider : BuildConfigFieldsProvider {
 

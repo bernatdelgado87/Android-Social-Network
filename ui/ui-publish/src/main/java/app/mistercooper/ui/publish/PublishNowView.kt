@@ -32,12 +32,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import app.mistercooper.ui.common.utils.BuildConfigFieldsProvider
 import app.mistercooper.ui.common.R.drawable.ic_add_photo
 import app.mistercooper.ui.common.components.CommonScaffoldTopBar
 import app.mistercooper.ui.common.components.LoadingComponent
 import app.mistercooper.ui.common.components.SelectSourceBottomSheet
 import app.mistercooper.ui.common.navigation.GlobalNavigator
+import app.mistercooper.ui.common.utils.BuildConfigFieldsProvider
 import app.mistercooper.ui.common.utils.restartCurrentActivity
 import app.mistercooper.ui.publish.viewmodel.PublishViewModel
 import coil.compose.AsyncImage
